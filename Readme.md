@@ -15,7 +15,7 @@ Before you begin, ensure you have met the following requirements:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/vamsivalluri1020/HeartRateAssignmentTest.git
+   git clone https://github.com/vamsivalluri1020/HeartRateAssignment.git
 
 2. Install project dependencies:
 

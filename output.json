@@ -3,36 +3,28 @@
     "date": "2023-04-28",
     "min": 60,
     "max": 119,
-    "sum": 9660,
-    "count": 116,
-    "latestDataTimestamp": "2023-04-28T21:54:00",
-    "median": 83.27586206896552
+    "median": 80.5,
+    "latestDataTimestamp": "2023-04-28T21:54:00+05:30"
   },
   {
     "date": "2023-04-29",
     "min": 61,
     "max": 120,
-    "sum": 9774,
-    "count": 118,
-    "latestDataTimestamp": "2023-04-29T21:54:00",
-    "median": 82.83050847457628
+    "median": 81,
+    "latestDataTimestamp": "2023-04-29T21:54:00+05:30"
   },
   {
     "date": "2023-04-30",
     "min": 62,
     "max": 120,
-    "sum": 9912,
-    "count": 118,
-    "latestDataTimestamp": "2023-04-30T21:53:00",
-    "median": 84
+    "median": 82,
+    "latestDataTimestamp": "2023-04-30T21:53:00+05:30"
   },
   {
     "date": "2023-05-01",
     "min": 60,
     "max": 117,
-    "sum": 9704,
-    "count": 120,
-    "latestDataTimestamp": "2023-05-01T21:56:00",
-    "median": 80.86666666666666
+    "median": 78,
+    "latestDataTimestamp": "2023-05-01T21:56:00+05:30"
   }
 ]

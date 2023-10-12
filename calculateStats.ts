@@ -1,9 +1,8 @@
 import fs from 'fs';
 import moment from 'moment';
-import _ from 'lodash';
 
 // Read the input JSON data
-const rawData = fs.readFileSync('input.json', 'utf8');
+const rawData: string = fs.readFileSync('input.json', 'utf8');
 const data: any[] = JSON.parse(rawData);
 
 // Initialize an object to store the statistics
@@ -11,36 +10,48 @@ const stats: { [key: string]: any } = {};
 
 // Process the data
 data.forEach((entry: any) => {
-  const date = moment(entry.timestamps.startTime).format('YYYY-MM-DD');
+  const date: string = moment(entry.timestamps.startTime).format('YYYY-MM-DD');
   if (!stats[date]) {
     stats[date] = {
       min: entry.beatsPerMinute,
       max: entry.beatsPerMinute,
       sum: entry.beatsPerMinute,
       count: 1,
-      latestDataTimestamp: entry.timestamps.endTime,
+      latestDataTimestamp: moment(entry.timestamps.endTime).format(),
+      values: [entry.beatsPerMinute], // Initialize the values array
     };
   } else {
-    stats[date].min = Math.min(stats[date].min, entry.beatsPerMinute);
-    stats[date].max = Math.max(stats[date].max, entry.beatsPerMinute);
-    stats[date].sum += entry.beatsPerMinute;
-    stats[date].count += 1;
-    if (entry.timestamps.endTime > stats[date].latestDataTimestamp) {
-      stats[date].latestDataTimestamp = entry.timestamps.endTime;
+    const statsDate: any = stats[date];
+    statsDate.min = Math.min(statsDate.min, entry.beatsPerMinute);
+    statsDate.max = Math.max(statsDate.max, entry.beatsPerMinute);
+    statsDate.sum += entry.beatsPerMinute;
+    statsDate.count += 1;
+    if (moment(entry.timestamps.endTime).isAfter(statsDate.latestDataTimestamp)) {
+      statsDate.latestDataTimestamp = moment(entry.timestamps.endTime).format();
     }
+    statsDate.values.push(entry.beatsPerMinute);
   }
 });
 
 // Calculate the median for each date
 for (const date in stats) {
-  const { count, sum } = stats[date];
-  stats[date].median = sum / count;
+  const { count, sum, values }: { count: number; sum: number; values: number[] } = stats[date];
+  values.sort((a, b) => a - b);
+  const middle = Math.floor(count / 2);
+  if (count % 2 === 0) {
+    stats[date].median = (values[middle - 1] + values[middle]) / 2;
+  } else {
+    stats[date].median = values[middle];
+  }
 }
 
 // Transform the result into an array of objects
-const result = Object.keys(stats).map(date => ({
+const result = Object.keys(stats).map((date) => ({
   date,
-  ...stats[date],
+  min: stats[date].min,
+  max: stats[date].max,
+  median: stats[date].median,
+  latestDataTimestamp: stats[date].latestDataTimestamp,
 }));
 
 // Write the output to the output JSON file
